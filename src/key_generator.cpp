@@ -58,4 +58,12 @@ const char* key_generator_t::next(bool in_sequence)
     }
     return buf_;
 }
+
+const char* decimal_key_generator_t::next(bool in_sequence) {
+  uint64_t id = in_sequence ? current_id_++ : next_id();
+  uint32_t hashed_id = utils::multiplicative_hash<uint32_t>(id);
+  utils::u32toa_lut(hashed_id, buf_);
+  return buf_;
+}
+
 } // namespace PiBench

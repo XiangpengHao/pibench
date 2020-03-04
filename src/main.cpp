@@ -187,10 +187,13 @@ int main(int argc, char** argv)
                     << std::endl;
                 opt.key_distribution = distribution_t::ZIPFIAN;
             }
+            else if (dist.compare("decimal") == 0) {
+              opt.key_distribution = distribution_t ::DECIMALSTRING;
+            } 
             else
             {
                 std::cout << "Invalid key distribution, must be one of "
-                << "[UNIFORM | SELFSIMILAR | ZIPFIAN], but is " << dist << std::endl;
+                << "[UNIFORM | SELFSIMILAR | ZIPFIAN, DECIMAL], but is " << dist << std::endl;
                 exit(1);
             }
         }

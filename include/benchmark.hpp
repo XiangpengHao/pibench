@@ -26,7 +26,8 @@ enum class distribution_t : uint8_t
 {
     UNIFORM,
     SELFSIMILAR,
-    ZIPFIAN
+    ZIPFIAN,
+    DECIMALSTRING
 };
 
 /**

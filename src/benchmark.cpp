@@ -112,9 +112,14 @@ benchmark_t::benchmark_t(tree_api* tree, const options_t& opt) noexcept
         key_generator_ = std::make_unique<zipfian_key_generator_t>(key_space_sz, opt_.key_skew, opt_.key_size, opt_.key_prefix);
         break;
 
+    case distribution_t::DECIMALSTRING:
+      key_generator_ = std::make_unique<decimal_key_generator_t>(
+          key_space_sz, opt_.key_size, opt_.key_prefix);
+      break;
+
     default:
-        std::cout << "Error: unknown distribution!" << std::endl;
-        exit(0);
+      std::cout << "Error: unknown distribution!" << std::endl;
+      exit(0);
     }
 }
 

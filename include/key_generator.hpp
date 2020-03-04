@@ -56,7 +56,7 @@ public:
      *                    if @false keys are generated randomly.
      * @return const char* pointer to beginning of key.
      */
-    virtual const char* next(bool in_sequence = false) final;
+    virtual const char* next(bool in_sequence = false);
 
     /**
      * @brief Returns total key size (including prefix).
@@ -93,12 +93,12 @@ protected:
     /// Engine used for generating random numbers.
     static thread_local std::default_random_engine generator_;
 
-private:
-    /// Seed used for generating random numbers.
-    static thread_local uint32_t seed_;
-
     /// Space to materialize the keys (avoid allocation).
     static thread_local char buf_[KEY_MAX];
+
+ private:
+    /// Seed used for generating random numbers.
+    static thread_local uint32_t seed_;
 
     /// Size of keyspace to generate keys.
     const size_t N_;
@@ -164,5 +164,20 @@ public:
 private:
     zipfian_int_distribution<uint64_t> dist_;
 };
-} // namespace PiBench
+
+class decimal_key_generator_t final : public key_generator_t {
+ public:
+  decimal_key_generator_t(size_t N, size_t size, const std::string& prefix = "")
+      : dist_(1, N), key_generator_t(N, size, prefix) {}
+
+ protected:
+  virtual uint64_t next_id() override { return dist_(generator_); }
+
+  virtual const char* next(bool in_sequence) override;
+
+ private:
+  std::uniform_int_distribution<uint32_t> dist_;
+};
+
+}  // namespace PiBench
 #endif
