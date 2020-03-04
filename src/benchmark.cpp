@@ -377,6 +377,8 @@ std::ostream& operator<<(std::ostream& os, const PiBench::distribution_t& dist)
     case PiBench::distribution_t::ZIPFIAN:
         return os << "ZIPFIAN";
         break;
+    case PiBench::distribution_t::DECIMALSTRING:
+        return os << "DECIMAL";
     default:
         return os << static_cast<uint8_t>(dist);
     }
